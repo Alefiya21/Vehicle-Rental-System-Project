@@ -24,7 +24,7 @@ public class DataInitializer {
                 // Create admin user
                 User admin = new User();
                 admin.setUsername("admin");
-                admin.setPassword("admin123"); // Store password as plain text
+                admin.setPassword("admin123"); 
                 admin.setFullName("System Admin");
                 admin.setEmail("admin@example.com");
                 admin.setPhoneNumber("1234567890");

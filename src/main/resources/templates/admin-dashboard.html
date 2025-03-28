@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Vehicle Rental System</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <h1>Vehicle Rental System - Admin</h1>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="#" class="active" data-section="vehicles">Vehicles</a></li>
+                <li><a href="#" data-section="bookings">Bookings</a></li>
+                <li><a href="#" data-section="users">Users</a></li>
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section id="vehicles-section" class="section active">
+            <div class="section-header">
+                <h2>Manage Vehicles</h2>
+                <button id="add-vehicle-btn" class="btn btn-primary">Add Vehicle</button>
+            </div>
+            <div id="vehicles-container" class="vehicles-list"></div>
+        </section>
+
+        <section id="bookings-section" class="section">
+            <h2>All Bookings</h2>
+            <div id="bookings-container" class="bookings-list"></div>
+        </section>
+
+        <section id="users-section" class="section">
+            <div class="section-header">
+                <h2>Manage Users</h2>
+                <button id="add-user-btn" class="btn btn-primary">Add User</button>
+            </div>
+            <div id="users-container" class="users-list"></div>
+        </section>
+    </main>
+
+    <!-- Add Vehicle Modal -->
+    <div id="vehicle-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="vehicle-modal-title">Add Vehicle</h2>
+            <div id="vehicle-error-message" class="error-message"></div>
+            <form id="vehicle-form">
+                <input type="hidden" id="vehicle-id">
+                <div class="form-group">
+                    <label for="vehicle-name">Name</label>
+                    <input type="text" id="vehicle-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-type-select">Type</label>
+                    <select id="vehicle-type-select" name="type" required>
+                        <option value="">Select Type</option>
+                        <option value="Car">Car</option>
+                        <option value="Bike">Bike</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-model">Model</label>
+                    <input type="text" id="vehicle-model" name="model" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-year">Year</label>
+                    <input type="text" id="vehicle-year" name="year" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-reg">Registration Number</label>
+                    <input type="text" id="vehicle-reg" name="registrationNumber" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-rate">Rental Rate (per day)</label>
+                    <input type="number" id="vehicle-rate" name="rentalRate" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-image">Image URL</label>
+                    <input type="text" id="vehicle-image" name="imageUrl">
+                </div>
+                <div class="form-group">
+                    <label for="vehicle-desc">Description</label>
+                    <textarea id="vehicle-desc" name="description" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Vehicle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="user-modal-title">Add User</h2>
+            <div id="user-error-message" class="error-message"></div>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                <div class="form-group">
+                    <label for="user-username">Username</label>
+                    <input type="text" id="user-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-password">Password</label>
+                    <input type="password" id="user-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-fullname">Full Name</label>
+                    <input type="text" id="user-fullname" name="fullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-phone">Phone Number</label>
+                    <input type="text" id="user-phone" name="phoneNumber" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save User</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script th:src="@{/js/admin-dashboard.js}"></script>
+</body>
+</html>

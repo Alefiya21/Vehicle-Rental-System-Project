@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
-    List<Vehicle> findByAvailableTrue();
+    // List<Vehicle> findByAvailableTrue();
     List<Vehicle> findByType(String type);
 }

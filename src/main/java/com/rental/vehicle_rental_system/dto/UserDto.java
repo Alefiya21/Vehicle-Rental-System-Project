@@ -33,10 +33,8 @@ public class UserDto {
     @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 
-    // Add roles field to match the User entity
     private Set<String> roles;
 
-    // Constructor without the password for safe data transfer
     public UserDto(Long id, String username, String fullName, String email, String phoneNumber, Set<String> roles) {
         this.id = id;
         this.username = username;

@@ -40,5 +40,4 @@ public class VehicleDto {
     private String imageUrl;
     
     private String description;
-
 }

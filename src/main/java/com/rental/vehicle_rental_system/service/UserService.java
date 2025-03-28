@@ -1,6 +1,5 @@
 package com.rental.vehicle_rental_system.service;
 
-import com.rental.vehicle_rental_system.dto.UpdateUserDto;
 import com.rental.vehicle_rental_system.dto.UserDto;
 import com.rental.vehicle_rental_system.exception.ResourceNotFoundException;
 import com.rental.vehicle_rental_system.model.User;
@@ -68,49 +67,5 @@ public class UserService {
                 savedUser.getPhoneNumber(),
                 savedUser.getRoles()
         );
-    }
-
-    public UserDto createAdmin(UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUsername());
-        user.setPassword(userDto.getPassword()); // Store password as plain text
-        user.setFullName(userDto.getFullName());
-        user.setEmail(userDto.getEmail());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-
-        // Assign admin role
-        Set<String> roles = new HashSet<>();
-        roles.add("ROLE_ADMIN");
-        user.setRoles(roles);
-
-        User savedUser = userRepository.save(user);
-
-        // Convert `User` entity to `UserDto` before returning
-        return new UserDto(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                null,  // Do not return the password for security reasons
-                savedUser.getFullName(),
-                savedUser.getEmail(),
-                savedUser.getPhoneNumber(),
-                savedUser.getRoles()
-        );
-    }
-
-    public User updateUser(Long id, UpdateUserDto userDto) {
-        System.out.println("Received UpdateUserDto: " + userDto);
-
-        User user = getUserById(id);
-
-        user.setFullName(userDto.getFullName());
-        user.setEmail(userDto.getEmail());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-
-        // Only update the password if it's provided and not empty
-        if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
-            user.setPassword(userDto.getPassword());  // Keeping it as plain text as per your requirement
-        }
-
-        return userRepository.save(user);
     }
 }

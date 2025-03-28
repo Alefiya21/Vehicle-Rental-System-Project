@@ -36,26 +36,6 @@ public class VehicleService {
                 .collect(Collectors.toList());
     }
 
-    public List<VehicleDto> getAvailableVehicles() {
-        List<Vehicle> availableVehicles = vehicleRepository.findByAvailableTrue(); // ✅ Fetch only available vehicles
-    
-        return availableVehicles.stream()
-                .map(vehicle -> new VehicleDto(
-                        vehicle.getId(),
-                        vehicle.getName(),
-                        vehicle.getType(),
-                        vehicle.getModel(),
-                        vehicle.getYear(),
-                        vehicle.getRegistrationNumber(),
-                        vehicle.getRentalRate(),
-                        vehicle.isAvailable(),
-                        vehicle.getImageUrl(),
-                        vehicle.getDescription()
-                ))
-                .collect(Collectors.toList());
-    }
-
-
     public List<VehicleDto> getVehiclesByType(String type) {
         List<Vehicle> vehicles = vehicleRepository.findByType(type);
         return vehicles.stream()
@@ -93,7 +73,6 @@ public class VehicleService {
         );
     }
 
-    // Returns Vehicle entity for internal service use
     public Vehicle getVehicleById(Long id) {
         return vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + id));
