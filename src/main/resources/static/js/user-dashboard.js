@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Check if user is logged in
     const username = localStorage.getItem('username');
     const userId = localStorage.getItem('userId');
     const userRoles = JSON.parse(localStorage.getItem('roles'));
@@ -56,13 +55,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Vehicle type filter
     document.getElementById('vehicle-type').addEventListener('change', function () {
         loadVehicles(this.value);
-    });
-
-    // Profile form submission
-    const profileForm = document.getElementById('profile-form');
-    profileForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        updateProfile();
     });
 
     // Booking modal
@@ -125,55 +117,14 @@ function loadUserProfile() {
 
     apiCall(`/api/users/${userId}`)
         .then(user => {
-            document.getElementById('profile-username').value = user.username;
-            document.getElementById('profile-fullname').value = user.fullName;
-            document.getElementById('profile-email').value = user.email;
-            document.getElementById('profile-phone').value = user.phoneNumber;
+            document.getElementById('profile-username').textContent = user.username;
+            document.getElementById('profile-fullname').textContent = user.fullName;
+            document.getElementById('profile-email').textContent = user.email;
+            document.getElementById('profile-phone').textContent = user.phoneNumber;
         })
         .catch(error => {
             console.error('Error loading profile:', error);
         });
-}
-
-// Update user profile
-function updateProfile() {
-    const userId = localStorage.getItem('userId');
-    const profileErrorMessage = document.getElementById('profile-error-message');
-
-    const userData = {
-        username: document.getElementById('profile-username').value.trim(),
-        fullName: document.getElementById('profile-fullname').value.trim(),
-        email: document.getElementById('profile-email').value.trim(),
-        phoneNumber: document.getElementById('profile-phone').value.trim(),
-        password: document.getElementById('profile-password').value.trim() || "", // Send empty string if no password
-        roles: ["ROLE_USER"] // Ensure roles are always included
-    };
-
-    console.log("🚀 Sending Data:", JSON.stringify(userData, null, 2));
-
-    fetch(`/api/users/${userId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => { throw new Error(err.detail || "Failed to update profile") });
-        }
-        return response.json();
-    })
-    .then(user => {
-        console.log("✅ Updated User:", user);
-        alert('Profile updated successfully!');
-        document.getElementById('profile-password').value = '';
-    })
-    .catch(error => {
-        console.error("❌ Error updating profile:", error);
-        profileErrorMessage.textContent = error.message;
-        profileErrorMessage.style.display = 'block';
-    });
 }
 
 
@@ -183,13 +134,11 @@ function loadVehicles(type = '') {
     const vehiclesContainer = document.getElementById('vehicles-container');
     vehiclesContainer.innerHTML = '<div class="loading">Loading vehicles...</div>';
 
-    let url = '/api/vehicles';  // Default API for available vehicles
+    let url = '/api/vehicles';
 
     if (type && type !== 'all') {
         url = `/api/vehicles/type/${type}`;
     }
-
-    console.log("Fetching vehicles from:", url); // ✅ Debugging
 
     apiCall(url, 'GET')
         .then(vehicles => {
@@ -205,7 +154,7 @@ function loadVehicles(type = '') {
                 const vehicleCard = document.createElement('div');
                 vehicleCard.className = 'vehicle-card';
 
-                const imageUrl = vehicle.imageUrl || '/images/vehicle-placeholder.jpg';
+                const imageUrl = vehicle.imageUrl;
 
                 vehicleCard.innerHTML = `
                     <div class="vehicle-image">
@@ -246,14 +195,11 @@ function openBookingModal(vehicleId, rate) {
     const vehicleDetails = document.getElementById('vehicle-details');
     const vehicleIdInput = document.getElementById('vehicle-id');
 
-    // Reset form
     document.getElementById('booking-form').reset();
     document.getElementById('booking-error-message').style.display = 'none';
 
-    // Set vehicle ID
     vehicleIdInput.value = vehicleId;
 
-    // Show modal even if vehicle is booked
     bookingModal.style.display = 'block';
 
     // Load vehicle details
@@ -266,14 +212,13 @@ function openBookingModal(vehicleId, rate) {
                 <p><strong>Rate:</strong> $${vehicle.rentalRate}/day</p>
             `;
 
-            // Set min date for start date (today)
             const today = new Date();
-            const todayStr = today.toISOString().split('T')[0];
+            const todayStr = today.toISOString().split('T')[0]; 
             document.getElementById('start-date').min = todayStr;
         })
         .catch(error => {
             console.error('Failed to load vehicle details:', error);
-            vehicleDetails.innerHTML = '<p class="error">Error loading vehicle details</p>'; // ✅ Show error but keep modal open
+            vehicleDetails.innerHTML = '<p class="error">Error loading vehicle details</p>';
         });
 }
 
@@ -287,12 +232,12 @@ function calculateEstimatedCost() {
     if (startDate && endDate && vehicleId) {
         apiCall(`/api/vehicles/${vehicleId}`)
             .then(vehicle => {
-                const start = new Date(startDate);
+                const start = new Date(startDate); 
                 const end = new Date(endDate);
 
                 // Calculate days
                 const diffTime = Math.abs(end - start);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
 
                 // Calculate cost
                 const cost = diffDays * vehicle.rentalRate;
@@ -304,14 +249,14 @@ function calculateEstimatedCost() {
                 document.getElementById('total-cost').value = 'Error calculating cost';
             });
     }
-}
+} 
 
 function createBooking() {
     const bookingErrorMessage = document.getElementById('booking-error-message');
     const vehicleId = document.getElementById('vehicle-id').value;
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
-    const userId = localStorage.getItem('userId'); // ✅ Use stored user ID
+    const userId = localStorage.getItem('userId');
 
     if (!userId) {
         console.error("User ID not found! Cannot create booking.");
@@ -327,21 +272,16 @@ function createBooking() {
     const start = new Date(startDate).toISOString();
     const end = new Date(endDate).toISOString();
 
-    if (new Date(startDate) >= new Date(endDate)) {
+    if (start >= end) {
         bookingErrorMessage.textContent = 'End date must be after start date';
         bookingErrorMessage.style.display = 'block';
         return;
     }
 
-    console.log(`Checking Availability for Vehicle ID: ${vehicleId}, Start: ${start}, End: ${end}`);
-
     // Check vehicle availability first
     apiCall(`/api/bookings/check-availability?vehicleId=${vehicleId}&startDate=${start}&endDate=${end}`, 'GET')
         .then(response => {
             if (response.available) {
-                console.log("Vehicle is available. Proceeding with booking...");
-
-                // Proceed with booking creation
                 return apiCall('/api/bookings', 'POST', {
                     userId: userId,
                     vehicleId: vehicleId,
@@ -423,13 +363,6 @@ function loadBookings() {
 
             bookingsContainer.innerHTML = '';
             bookingsContainer.appendChild(table);
-
-            // Add event listeners to cancel buttons
-            document.querySelectorAll('.cancel-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    cancelBooking(this.getAttribute('data-id'));
-                });
-            });
         })
         .catch(error => {
             console.error('Error loading bookings:', error);

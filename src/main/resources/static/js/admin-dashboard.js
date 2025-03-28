@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Check if user is an admin
     const username = localStorage.getItem('username');
     if (!username) {
         alert("You are not logged in. Redirecting to login page...");
@@ -96,25 +95,6 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
         saveUser();
     });
-
-    // Booking Modal
-    const viewBookingModal = document.getElementById('view-booking-modal');
-    const closeViewBooking = viewBookingModal.querySelector('.close');
-
-    closeViewBooking.addEventListener('click', function () {
-        viewBookingModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (e) {
-        if (e.target === viewBookingModal) {
-            viewBookingModal.style.display = 'none';
-        }
-    });
-
-    // Update Booking Status
-    document.getElementById('update-booking-status').addEventListener('click', function () {
-        updateBookingStatus();
-    });
 });
 
 // API call helper function
@@ -138,7 +118,7 @@ function apiCall(url, method = 'GET', body = null) {
 
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.includes("application/json")) {
-                return response.json(); // Parse JSON if response has body
+                return response.json();
             } else {
                 return null; // Return null for empty responses (DELETE case)
             }
@@ -150,7 +130,7 @@ function loadVehicles() {
     const vehiclesContainer = document.getElementById('vehicles-container');
     vehiclesContainer.innerHTML = '<div class="loading">Loading vehicles...</div>';
     
-    apiCall('/api/admin/vehicles') // Admin-specific endpoint
+    apiCall('/api/admin/vehicles')
         .then(vehicles => {
             if (vehicles.length === 0) {
                 vehiclesContainer.innerHTML = '<div class="no-data">No vehicles found</div>';
@@ -313,10 +293,10 @@ function loadBookings() {
             bookingsContainer.appendChild(table);
         })
         .catch(error => {
-            console.error('Error loading bookings:', error); // Log the error for debugging
+            console.error('Error loading bookings:', error);
             bookingsContainer.innerHTML = '<div class="error">Failed to load bookings</div>';
         });
-}
+}   
 
 
 // Load users
@@ -393,8 +373,7 @@ function openUserModal(userId = null) {
     document.getElementById('user-password').required = true; // Password required for new user
     
     // Show modal
-    userModal.style.display = 'block';
-    
+    userModal.style.display = 'block'; 
 }
 
 // Save user
@@ -409,14 +388,12 @@ function saveUser() {
         phoneNumber: document.getElementById('user-phone').value
     };
 
-    // **Validation: Ensure all required fields are filled**
     if (!userData.username || !userData.password || !userData.fullName || !userData.email || !userData.phoneNumber) {
         userErrorMessage.textContent = 'Please fill in all fields';
         userErrorMessage.style.display = 'block';
         return;
     }
 
-    // **API Call for User Registration**
     fetch('/api/admin/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -431,8 +408,8 @@ function saveUser() {
     .then(data => {
         alert('User registered successfully!');
         document.getElementById('user-modal').style.display = 'none';
-        document.getElementById('user-form').reset(); // Reset form after successful registration
-        loadUsers(); // Refresh user list after registration
+        document.getElementById('user-form').reset(); 
+        loadUsers();
     })
     .catch(error => {
         userErrorMessage.textContent = error.message;

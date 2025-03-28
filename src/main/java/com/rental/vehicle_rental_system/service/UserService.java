@@ -1,6 +1,5 @@
 package com.rental.vehicle_rental_system.service;
 
-import com.rental.vehicle_rental_system.dto.UpdateUserDto;
 import com.rental.vehicle_rental_system.dto.UserDto;
 import com.rental.vehicle_rental_system.exception.ResourceNotFoundException;
 import com.rental.vehicle_rental_system.model.User;
@@ -68,21 +67,5 @@ public class UserService {
                 savedUser.getPhoneNumber(),
                 savedUser.getRoles()
         );
-    }
-
-    public User updateUser(Long id, UpdateUserDto userDto) {
-
-        User user = getUserById(id);
-
-        user.setFullName(userDto.getFullName());
-        user.setEmail(userDto.getEmail());
-        user.setPhoneNumber(userDto.getPhoneNumber());
-
-        // Only update the password if it's provided and not empty
-        if (userDto.getPassword() != null && !userDto.getPassword().isEmpty()) {
-            user.setPassword(userDto.getPassword()); 
-        }
-
-        return userRepository.save(user);
     }
 }

@@ -23,7 +23,7 @@
 
     <main class="main-content">
         <section id="vehicles-section" class="section active">
-            <h2>Available Vehicles</h2>
+            <h2>Vehicles</h2>
             <div class="filter-container">
                 <div class="filter-group">
                     <label for="vehicle-type">Vehicle Type:</label>
@@ -46,31 +46,27 @@
             <h2>My Profile</h2>
             <div class="profile-container">
                 <div id="profile-error-message" class="error-message"></div>
-                <form id="profile-form">
+                <div id="profile-form">
                     <div class="form-group">
                         <label for="profile-username">Username</label>
-                        <input type="text" id="profile-username" name="username" readonly>
+                        <span id="profile-username"></span>
                     </div>
                     <div class="form-group">
                         <label for="profile-fullname">Full Name</label>
-                        <input type="text" id="profile-fullname" name="fullName" required>
+                        <span id="profile-fullname"></span>
                     </div>
                     <div class="form-group">
                         <label for="profile-email">Email</label>
-                        <input type="email" id="profile-email" name="email" required>
+                        <span id="profile-email"></span>
                     </div>
                     <div class="form-group">
                         <label for="profile-phone">Phone Number</label>
-                        <input type="text" id="profile-phone" name="phoneNumber" required>
+                        <span id="profile-phone"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="profile-password">New Password (leave blank to keep current)</label>
-                        <input type="password" id="profile-password" name="password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-                </form>
+                </div>
             </div>
         </section>
+        
     </main>
 
     <!-- Booking Modal -->
