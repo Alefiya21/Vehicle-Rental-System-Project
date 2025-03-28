@@ -27,6 +27,7 @@ public class AuthController {
         if (user == null || !user.getPassword().equals(loginDto.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
         }
+        
         UserDto userDto = new UserDto(
             user.getId(),
             user.getUsername(),
@@ -38,11 +39,5 @@ public class AuthController {
         );
 
         return ResponseEntity.ok(userDto);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
-        UserDto createdUser = userService.createUser(userDto); // Default role is assigned in UserService
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 }

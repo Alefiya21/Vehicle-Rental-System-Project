@@ -21,7 +21,6 @@ public class UserController {
 
         User user = userService.getUserById(id);
 
-        // Convert User to UserDto (hiding password)
         UserDto userDto = new UserDto(
             user.getId(),
             user.getUsername(),
@@ -49,5 +48,4 @@ public class UserController {
 
         return ResponseEntity.ok(responseDto);
     }
-  
 }

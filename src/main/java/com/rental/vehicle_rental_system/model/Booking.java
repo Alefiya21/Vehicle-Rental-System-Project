@@ -18,11 +18,11 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -36,7 +36,7 @@ public class Booking {
     private BigDecimal totalCost;
 
     @Column(nullable = false)
-    private String status; // PENDING, CONFIRMED, COMPLETED, CANCELLED
+    private String status;
 
     @Column(nullable = false)
     private LocalDateTime bookingDate = LocalDateTime.now();

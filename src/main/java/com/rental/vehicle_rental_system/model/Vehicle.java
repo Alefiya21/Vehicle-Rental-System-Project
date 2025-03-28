@@ -24,7 +24,7 @@ public class Vehicle {
     private String name;
 
     @Column(nullable = false)
-    private String type; // Car, Bike, etc.
+    private String type; // Car, Bike
 
     @Column(nullable = false)
     private String model;
@@ -41,6 +41,7 @@ public class Vehicle {
     @Column(nullable = false)
     private boolean available = true;
 
+    @Column(length = 1000)
     private String imageUrl;
 
     @Column(length = 1000)

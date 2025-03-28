@@ -24,43 +24,10 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Login</button>
                 </form>
-                <p>Don't have an account? <a href="#" id="register-link">Register</a></p>
             </div>
         </div>
     </div>
 
-    <!-- Register Modal -->
-    <div id="register-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <div id="register-error-message" class="error-message"></div>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="reg-username">Username</label>
-                    <input type="text" id="reg-username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-password">Password</label>
-                    <input type="password" id="reg-password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-fullname">Full Name</label>
-                    <input type="text" id="reg-fullname" name="fullName" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-email">Email</label>
-                    <input type="email" id="reg-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="reg-phone">Phone Number</label>
-                    <input type="text" id="reg-phone" name="phoneNumber" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
-        </div>
-    </div>
-
-    <script th:src="@{/js/login.js}"></script>
+  <script th:src="@{/js/login.js}"></script>
 </body>
 </html>

@@ -20,11 +20,6 @@ public class VehicleController {
     public ResponseEntity<List<VehicleDto>> getAllVehicles() {
         return ResponseEntity.ok(vehicleService.getAllVehicles());
     }
-
-    @GetMapping("/available")
-    public ResponseEntity<List<VehicleDto>> getAvailableVehicles() {
-        return ResponseEntity.ok(vehicleService.getAvailableVehicles()); 
-    }
     
     @GetMapping("/type/{type}")
     public ResponseEntity<List<VehicleDto>> getVehiclesByType(@PathVariable String type) {
@@ -35,5 +30,4 @@ public class VehicleController {
     public ResponseEntity<VehicleDto> getVehicleById(@PathVariable Long id) {
         return ResponseEntity.ok(vehicleService.getVehicleDtoById(id));
     }
-
 }

@@ -9,8 +9,6 @@ import com.rental.vehicle_rental_system.model.Vehicle;
 import com.rental.vehicle_rental_system.repository.BookingRepository;
 import com.rental.vehicle_rental_system.repository.VehicleRepository;
 import jakarta.transaction.Transactional;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,15 +36,7 @@ public class BookingService {
 
     @Transactional
     public List<BookingResponseDto> getAllBookings() {
-        // Only allow admins to view all bookings
-        
         List<Booking> bookings = bookingRepository.findAll();
-
-        // Ensure vehicle and user are loaded
-        bookings.forEach(booking -> {
-            Hibernate.initialize(booking.getVehicle());
-            Hibernate.initialize(booking.getUser());
-        });
 
         return bookings.stream()
                 .map(BookingResponseDto::new)
@@ -100,9 +90,6 @@ public class BookingService {
     @Transactional
     public boolean isVehicleAvailable(Long vehicleId, LocalDateTime startDate, LocalDateTime endDate) {
         List<Booking> overlappingBookings = bookingRepository.findOverlappingBookings(vehicleId, startDate, endDate);
-        
-        System.out.println("Overlapping bookings for vehicle ID " + vehicleId + ": " + overlappingBookings.size());
-        
-        return overlappingBookings.isEmpty(); // Returns true if no conflicting bookings exist
+        return overlappingBookings.isEmpty();
     }
 }
