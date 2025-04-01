@@ -29,7 +29,7 @@ public class AuthController {
         }
         
         UserDto userDto = new UserDto(user);
-
+        
         return ResponseEntity.ok(userDto);
     }
 }
