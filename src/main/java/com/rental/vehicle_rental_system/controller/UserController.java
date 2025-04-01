@@ -15,18 +15,11 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("id") Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable Long id) {
 
         User user = userService.getUserById(id);
 
-        UserDto userDto = new UserDto(
-            user.getId(),
-            user.getUsername(),
-            user.getFullName(),
-            user.getEmail(),
-            user.getPhoneNumber(),
-            user.getRoles()
-        );
+        UserDto userDto = new UserDto(user);
 
         return ResponseEntity.ok(userDto);
     }

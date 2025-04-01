@@ -3,7 +3,6 @@ package com.rental.vehicle_rental_system.controller;
 import com.rental.vehicle_rental_system.dto.BookingResponseDto;
 import com.rental.vehicle_rental_system.dto.UserDto;
 import com.rental.vehicle_rental_system.dto.VehicleDto;
-import com.rental.vehicle_rental_system.model.Vehicle;
 import com.rental.vehicle_rental_system.service.BookingService;
 import com.rental.vehicle_rental_system.service.UserService;
 import com.rental.vehicle_rental_system.service.VehicleService;
@@ -55,7 +54,8 @@ public class AdminController {
     }
 
     @PostMapping("/vehicles")
-    public ResponseEntity<Vehicle> createVehicle(@Valid @RequestBody VehicleDto vehicleDto) {
-        return new ResponseEntity<>(vehicleService.createVehicle(vehicleDto), HttpStatus.CREATED);
+    public ResponseEntity<VehicleDto> createVehicle(@Valid @RequestBody VehicleDto vehicleDto) {
+        VehicleDto createdVehicle = vehicleService.createVehicle(vehicleDto);
+        return new ResponseEntity<>(createdVehicle, HttpStatus.CREATED);
     }
 }

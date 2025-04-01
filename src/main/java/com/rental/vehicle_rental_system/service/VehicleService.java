@@ -21,56 +21,15 @@ public class VehicleService {
         List<Vehicle> vehicles = vehicleRepository.findAll();
 
         return vehicles.stream()
-                .map(vehicle -> new VehicleDto(
-                        vehicle.getId(),
-                        vehicle.getName(),
-                        vehicle.getType(),
-                        vehicle.getModel(),
-                        vehicle.getYear(),
-                        vehicle.getRegistrationNumber(),
-                        vehicle.getRentalRate(),
-                        vehicle.isAvailable(),
-                        vehicle.getImageUrl(),
-                        vehicle.getDescription()
-                ))
+                .map(VehicleDto::new)
                 .collect(Collectors.toList());
     }
 
     public List<VehicleDto> getVehiclesByType(String type) {
         List<Vehicle> vehicles = vehicleRepository.findByType(type);
         return vehicles.stream()
-                .map(vehicle -> new VehicleDto(
-                        vehicle.getId(),
-                        vehicle.getName(),
-                        vehicle.getType(),
-                        vehicle.getModel(),
-                        vehicle.getYear(),
-                        vehicle.getRegistrationNumber(),
-                        vehicle.getRentalRate(),
-                        vehicle.isAvailable(),
-                        vehicle.getImageUrl(),
-                        vehicle.getDescription()
-                ))
+                .map(VehicleDto::new)
                 .collect(Collectors.toList());
-    }
-
-
-    public VehicleDto getVehicleDtoById(Long id) {
-        Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found with id: " + id));
-
-        return new VehicleDto(
-                vehicle.getId(),
-                vehicle.getName(),
-                vehicle.getType(),
-                vehicle.getModel(),
-                vehicle.getYear(),
-                vehicle.getRegistrationNumber(),
-                vehicle.getRentalRate(),
-                vehicle.isAvailable(),
-                vehicle.getImageUrl(),
-                vehicle.getDescription()
-        );
     }
 
     public Vehicle getVehicleById(Long id) {
@@ -79,7 +38,7 @@ public class VehicleService {
     }
 
 
-    public Vehicle createVehicle(VehicleDto vehicleDto) {
+    public VehicleDto createVehicle(VehicleDto vehicleDto) {
         Vehicle vehicle = new Vehicle();
         vehicle.setName(vehicleDto.getName());
         vehicle.setType(vehicleDto.getType());
@@ -91,7 +50,8 @@ public class VehicleService {
         vehicle.setImageUrl(vehicleDto.getImageUrl());
         vehicle.setDescription(vehicleDto.getDescription());
 
-        return vehicleRepository.save(vehicle);
-    }
+        Vehicle savedVehicle = vehicleRepository.save(vehicle);
 
+        return new VehicleDto(savedVehicle);
+    }
 }

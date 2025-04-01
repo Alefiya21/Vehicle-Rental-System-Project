@@ -1,5 +1,6 @@
 package com.rental.vehicle_rental_system.dto;
 
+import com.rental.vehicle_rental_system.model.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -35,12 +36,12 @@ public class UserDto {
 
     private Set<String> roles;
 
-    public UserDto(Long id, String username, String fullName, String email, String phoneNumber, Set<String> roles) {
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.roles = roles;
+    public UserDto(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.fullName = user.getFullName();
+        this.email = user.getEmail();
+        this.phoneNumber = user.getPhoneNumber();
+        this.roles = user.getRoles();
     }
 }

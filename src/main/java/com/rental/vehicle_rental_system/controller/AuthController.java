@@ -28,15 +28,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); 
         }
         
-        UserDto userDto = new UserDto(
-            user.getId(),
-            user.getUsername(),
-            null, 
-            user.getFullName(),
-            user.getEmail(),
-            user.getPhoneNumber(),
-            user.getRoles()
-        );
+        UserDto userDto = new UserDto(user);
 
         return ResponseEntity.ok(userDto);
     }

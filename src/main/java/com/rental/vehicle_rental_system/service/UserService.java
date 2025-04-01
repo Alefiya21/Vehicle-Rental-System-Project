@@ -22,15 +22,7 @@ public class UserService {
         List<User> users = userRepository.findAll();
 
         return users.stream()
-                .map(user -> new UserDto(
-                        user.getId(),
-                        user.getUsername(),
-                        null,  // Password is not returned in API response
-                        user.getFullName(),
-                        user.getEmail(),
-                        user.getPhoneNumber(),
-                        user.getRoles()
-                ))
+                .map(UserDto::new)
                 .collect(Collectors.toList());
     }
 
@@ -58,14 +50,6 @@ public class UserService {
 
         User savedUser = userRepository.save(user);
 
-        return new UserDto(
-                savedUser.getId(),
-                savedUser.getUsername(),
-                null, 
-                savedUser.getFullName(),
-                savedUser.getEmail(),
-                savedUser.getPhoneNumber(),
-                savedUser.getRoles()
-        );
+        return new UserDto(savedUser);
     }
 }

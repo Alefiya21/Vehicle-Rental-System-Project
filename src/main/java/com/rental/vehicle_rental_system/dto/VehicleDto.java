@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import com.rental.vehicle_rental_system.model.Vehicle;
+
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor 
 public class VehicleDto {
 
     private Long id;
@@ -40,4 +42,17 @@ public class VehicleDto {
     private String imageUrl;
     
     private String description;
+
+    public VehicleDto(Vehicle vehicle) {
+        this.id = vehicle.getId();
+        this.name = vehicle.getName();
+        this.type = vehicle.getType();
+        this.model = vehicle.getModel();
+        this.year = vehicle.getYear();
+        this.registrationNumber = vehicle.getRegistrationNumber();
+        this.rentalRate = vehicle.getRentalRate();
+        this.available = vehicle.isAvailable();
+        this.imageUrl = vehicle.getImageUrl();
+        this.description = vehicle.getDescription();
+    }
 }

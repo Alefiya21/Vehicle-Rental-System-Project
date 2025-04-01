@@ -1,5 +1,6 @@
 package com.rental.vehicle_rental_system.controller;
 
+import com.rental.vehicle_rental_system.model.Vehicle;
 import com.rental.vehicle_rental_system.dto.VehicleDto;
 import com.rental.vehicle_rental_system.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class VehicleController {
 
     @GetMapping("/{id}")
     public ResponseEntity<VehicleDto> getVehicleById(@PathVariable Long id) {
-        return ResponseEntity.ok(vehicleService.getVehicleDtoById(id));
+
+        Vehicle vehicle = vehicleService.getVehicleById(id);
+
+        VehicleDto vehicleDto = new VehicleDto(vehicle);
+
+        return ResponseEntity.ok(vehicleDto);
     }
 }
