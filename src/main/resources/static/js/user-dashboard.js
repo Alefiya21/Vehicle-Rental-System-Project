@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const username = localStorage.getItem('username');
     const userId = localStorage.getItem('userId');
     const userRoles = JSON.parse(localStorage.getItem('roles'));
 
@@ -22,11 +21,9 @@ document.addEventListener('DOMContentLoaded', function () {
             const targetSection = this.getAttribute('data-section');
 
             if (targetSection) {
-                // Update active nav link
                 navLinks.forEach(link => link.classList.remove('active'));
                 this.classList.add('active');
 
-                // Show target section
                 sections.forEach(section => section.classList.remove('active'));
                 document.getElementById(`${targetSection}-section`).classList.add('active');
             }
@@ -36,9 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Logout
     document.getElementById('logout-btn').addEventListener('click', function (e) {
         e.preventDefault();
-        localStorage.removeItem('username');
-        localStorage.removeItem('userRoles');
-        localStorage.removeItem('userId');
+        localStorage.clear()
         window.location.href = '/login';
     });
 
@@ -296,7 +291,6 @@ function createBooking() {
             alert('Booking created successfully!');
             document.getElementById('booking-modal').style.display = 'none';
 
-            // Reload vehicles and bookings
             loadVehicles();
             loadBookings();
         })

@@ -120,7 +120,7 @@ function apiCall(url, method = 'GET', body = null) {
             if (contentType && contentType.includes("application/json")) {
                 return response.json();
             } else {
-                return null; // Return null for empty responses (DELETE case)
+                return null;
             }
         });
 }
@@ -160,7 +160,7 @@ function loadVehicles() {
             vehicles.forEach(vehicle => {
                 const tr = document.createElement('tr');
 
-                // Logic to determine if the vehicle is available or not
+                // Logic to determine if the vehicle is booked or not
                 const isBooked = vehicle.available ? 'No' : 'Yes';  
 
                 tr.innerHTML = `
@@ -188,24 +188,18 @@ function loadVehicles() {
 function openVehicleModal(vehicleId = null) {
     const vehicleModal = document.getElementById('vehicle-modal');
     const vehicleForm = document.getElementById('vehicle-form');
-    const vehicleModalTitle = document.getElementById('vehicle-modal-title');
     const vehicleErrorMessage = document.getElementById('vehicle-error-message');
     
-    // Reset form
     vehicleForm.reset();
     vehicleErrorMessage.style.display = 'none';
 
-    // Add mode
-    vehicleModalTitle.textContent = 'Add Vehicle';
     document.getElementById('vehicle-id').value = '';
     
-    // Show modal
     vehicleModal.style.display = 'block';
 }
 
 // Save vehicle
 function saveVehicle() {
-    const vehicleId = document.getElementById('vehicle-id').value;
     const vehicleErrorMessage = document.getElementById('vehicle-error-message');
     
     const vehicleData = {
@@ -230,12 +224,12 @@ function saveVehicle() {
     let method = 'POST';
     
     apiCall(url, method, vehicleData)
-        .then(vehicle => {
+        .then(() => {
             alert('Vehicle added successfully!');
             document.getElementById('vehicle-modal').style.display = 'none';
             loadVehicles();
         })
-        .catch(error => {
+        .catch(() => {
             vehicleErrorMessage.textContent = 'Failed to save vehicle.';
             vehicleErrorMessage.style.display = 'block';
         });
@@ -246,7 +240,7 @@ function loadBookings() {
     const bookingsContainer = document.getElementById('bookings-container');
     bookingsContainer.innerHTML = '<div class="loading">Loading bookings...</div>';
     
-    apiCall('/api/admin/bookings') // Admin-specific endpoint
+    apiCall('/api/admin/bookings') 
         .then(bookings => {
             if (bookings.length === 0) {
                 bookingsContainer.innerHTML = '<div class="no-data">No bookings found</div>';
@@ -359,20 +353,15 @@ function loadUsers() {
 function openUserModal(userId = null) {
     const userModal = document.getElementById('user-modal');
     const userForm = document.getElementById('user-form');
-    const userModalTitle = document.getElementById('user-modal-title');
     const userErrorMessage = document.getElementById('user-error-message');
     
-    // Reset form
     userForm.reset();
     userErrorMessage.style.display = 'none';
     
-    // Add mode
-    userModalTitle.textContent = 'Add User';
     document.getElementById('user-id').value = '';
-    document.getElementById('user-username').readOnly = false; // Can set username
-    document.getElementById('user-password').required = true; // Password required for new user
+    document.getElementById('user-username').readOnly = false; 
+    document.getElementById('user-password').required = true;
     
-    // Show modal
     userModal.style.display = 'block'; 
 }
 
@@ -394,25 +383,17 @@ function saveUser() {
         return;
     }
 
-    fetch('/api/admin/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Registration failed. Please try again.');
-        }
-        return response.json();
-    })
-    .then(data => {
-        alert('User registered successfully!');
-        document.getElementById('user-modal').style.display = 'none';
-        document.getElementById('user-form').reset(); 
-        loadUsers();
-    })
-    .catch(error => {
-        userErrorMessage.textContent = error.message;
-        userErrorMessage.style.display = 'block';
-    });
+    let url = '/api/admin/register';
+    let method = 'POST';
+    apiCall(url, method, userData)
+        .then(() => {
+            alert('User registered successfully!');
+            document.getElementById('user-modal').style.display = 'none';
+            document.getElementById('user-form').reset(); 
+            loadUsers();
+        })
+        .catch(() => {
+            userErrorMessage.textContent = 'Failed to save user';
+            userErrorMessage.style.display = 'block';
+        });
 }
