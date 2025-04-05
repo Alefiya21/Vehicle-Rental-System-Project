@@ -30,7 +30,6 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity<BookingResponseDto> createBooking(@Valid @RequestBody BookingDto bookingDto) {
-
         return new ResponseEntity<>(bookingService.createBooking(bookingDto), HttpStatus.CREATED);
     }
 

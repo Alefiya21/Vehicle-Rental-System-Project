@@ -30,8 +30,7 @@ public class AdminController {
     // User Management
     @PostMapping("/register")
     public ResponseEntity<UserDto> registerUser(@Valid @RequestBody UserDto userDto) {
-        UserDto createdUser = userService.createUser(userDto); 
-        return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(userDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/users")
@@ -42,12 +41,10 @@ public class AdminController {
     // Booking Management
     @GetMapping("/bookings")
     public ResponseEntity<List<BookingResponseDto>> getAllBookings() {
-
         return ResponseEntity.ok(bookingService.getAllBookings());
     }
 
     // Vehicle Management
-
     @GetMapping("/vehicles")
     public ResponseEntity<List<VehicleDto>> getAllVehicles() {
         return ResponseEntity.ok(vehicleService.getAllVehicles());
@@ -55,7 +52,6 @@ public class AdminController {
 
     @PostMapping("/vehicles")
     public ResponseEntity<VehicleDto> createVehicle(@Valid @RequestBody VehicleDto vehicleDto) {
-        VehicleDto createdVehicle = vehicleService.createVehicle(vehicleDto);
-        return new ResponseEntity<>(createdVehicle, HttpStatus.CREATED);
+        return new ResponseEntity<>(vehicleService.createVehicle(vehicleDto), HttpStatus.CREATED);
     }
 }
