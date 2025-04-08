@@ -300,7 +300,6 @@ function loadUsers() {
     
     apiCall('/api/admin/users')
         .then(users => {
-            console.log('Fetched users:', users);
             if (users.length === 0) {
                 usersContainer.innerHTML = '<div class="no-data">No users found</div>';
                 return;

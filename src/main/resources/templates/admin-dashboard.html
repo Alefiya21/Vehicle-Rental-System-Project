@@ -50,11 +50,11 @@
             <span class="close">&times;</span>
             <h2 id="vehicle-modal-title">Add Vehicle</h2>
             <div id="vehicle-error-message" class="error-message"></div>
-            <form id="vehicle-form">
+            <form id="vehicle-form" autocomplete="off">
                 <input type="hidden" id="vehicle-id">
                 <div class="form-group">
                     <label for="vehicle-name">Name</label>
-                    <input type="text" id="vehicle-name" name="name" required>
+                    <input type="text" id="vehicle-name" name="name" required autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="vehicle-type-select">Type</label>
@@ -99,27 +99,27 @@
             <span class="close">&times;</span>
             <h2 id="user-modal-title">Add User</h2>
             <div id="user-error-message" class="error-message"></div>
-            <form id="user-form">
+            <form id="user-form" autocomplete="on">
                 <input type="hidden" id="user-id">
                 <div class="form-group">
                     <label for="user-username">Username</label>
-                    <input type="text" id="user-username" name="username" placeholder="Enter Username" required>
+                    <input type="text" id="user-username" name="username" placeholder="Enter Username" required autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label for="user-password">Password</label>
-                    <input type="password" id="user-password" name="password" placeholder="Password should be at least 6 characters" required>
+                    <input type="password" id="user-password" name="password" placeholder="Password should be at least 6 characters" required autocomplete="new-password">
                 </div>
                 <div class="form-group">
                     <label for="user-fullname">Full Name</label>
-                    <input type="text" id="user-fullname" name="fullName" placeholder="Enter Full Name" required>
+                    <input type="text" id="user-fullname" name="fullName" placeholder="Enter Full Name" required autocomplete="name">
                 </div>
                 <div class="form-group">
                     <label for="user-email">Email</label>
-                    <input type="email" id="user-email" name="email" placeholder="Enter a valid email address" required>
+                    <input type="email" id="user-email" name="email" placeholder="Enter a valid email address" required autocomplete="email">
                 </div>
                 <div class="form-group">
                     <label for="user-phone">Phone Number</label>
-                    <input type="text" id="user-phone" name="phoneNumber" placeholder="Enter phone number" required>
+                    <input type="text" id="user-phone" name="phoneNumber" placeholder="Enter phone number" required autocomplete="tel">
                 </div>
                 <button type="submit" class="btn btn-primary">Save User</button>
             </form>
