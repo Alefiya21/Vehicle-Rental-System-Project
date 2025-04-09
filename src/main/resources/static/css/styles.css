@@ -687,9 +687,35 @@ body {
         flex-direction: column;
         gap: 15px;
     }
+
+    .vehicles-list th,
+    .bookings-list th,
+    .users-list th {
+        position: relative;
+    }
     
+    .vehicles-list th,
+    .vehicles-list td,
+    .bookings-list th,
+    .bookings-list td,
+    .users-list th,
+    .users-list td {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
     .filter-group {
-        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .filter-group label {
+        font-size: 0.8rem;
+    }
+
+    .vehicle-details .detail-label,
+    .booking-details .detail-label {
+        width: 120px;
+        font-size: 0.9rem;
     }
     
     .action-buttons {
